@@ -1,0 +1,622 @@
+# Azure Integration Services & Serverless - Interview Notes
+
+## Event Grid vs Service Bus vs Event Hubs
+
+| Feature             | Event Grid                      | Service Bus                      | Event Hubs                      |
+| ------------------- | ------------------------------- | -------------------------------- | ------------------------------- |
+| Purpose             | Event routing and notifications | Enterprise messaging             | High-throughput event streaming |
+| Communication       | Push-based                      | Pull-based                       | Streaming ingestion             |
+| Use Case            | Trigger reactions to events     | Reliable message processing      | Telemetry, logs, analytics      |
+| Message Size        | Up to 64 KB (Basic)             | Up to 256 KB (Standard)          | Event streaming                 |
+| Ordering            | No                              | Yes (FIFO with Sessions)         | Partition-based                 |
+| Dead Letter Queue   | No                              | Yes                              | No                              |
+| Duplicate Detection | No                              | Yes                              | No                              |
+| Message Retention   | Event delivery retries          | Up to 7 days                     | Configurable retention          |
+| Filters             | Subject/Event Type Filters      | SQL Filters, Correlation Filters | No                              |
+| Typical Scenario    | Blob upload triggers Function   | Order processing workflow        | IoT telemetry ingestion         |
+
+### Interview Question
+
+**When would you choose Service Bus over Event Grid?**
+
+Use **Service Bus** when:
+
+* Message ordering is required.
+* Guaranteed delivery is needed.
+* Dead-lettering is required.
+* Duplicate detection is needed.
+
+Use **Event Grid** when:
+
+* Event-driven architecture is needed.
+* Lightweight notifications are sufficient.
+* Multiple subscribers need event routing.
+
+Use **Event Hubs** when:
+
+* Millions of events per second need ingestion.
+* Streaming analytics is required.
+* Processing logs, telemetry, or IoT data.
+
+---
+
+# Azure Data Factory (ADF)
+
+Azure Data Factory is a **cloud-based, serverless data integration service** used to create:
+
+* ETL (Extract, Transform, Load) pipelines
+* ELT (Extract, Load, Transform) pipelines
+* Data migration workflows
+* Data orchestration processes
+
+## Core Components
+
+### Pipeline
+
+Logical grouping of activities.
+
+### Activity
+
+Individual task executed in a pipeline.
+
+Examples:
+
+* Copy Activity
+* Data Flow
+* Stored Procedure Activity
+* Web Activity
+
+### Linked Service
+
+Connection information for data sources.
+
+### Dataset
+
+Represents data structure within a source.
+
+### Trigger
+
+Schedules pipeline execution.
+
+Types:
+
+* Schedule Trigger
+* Tumbling Window Trigger
+* Event Trigger
+
+### Integration Runtime (IR)
+
+Used to move and transform data.
+
+Types:
+
+1. Azure IR
+2. Self-hosted IR
+3. Azure-SSIS IR
+
+### Interview Questions
+
+**Difference between ETL and ELT?**
+
+ETL:
+
+* Transform before loading.
+
+ELT:
+
+* Load first, transform later.
+* Common in Data Lake and Synapse solutions.
+
+---
+
+# Azure Functions
+
+Azure Functions is a serverless compute service used to run event-driven code.
+
+## Hosting Plans
+
+### Consumption Plan
+
+* Default timeout: 5 minutes
+* Maximum timeout: 10 minutes
+* Pay-per-execution
+* Automatic scaling
+* Cold starts possible
+
+### Flex Consumption Plan
+
+* Default timeout: 30 minutes
+* Maximum timeout: Unlimited
+* Reduced cold starts
+* Event-driven scaling
+* Always-ready instances available
+
+### Premium Plan
+
+* Default timeout: 30 minutes
+* Maximum timeout: Unlimited
+* Pre-warmed instances
+* Reduced cold starts
+* Automatic scale-out
+* More memory and CPU
+
+### Dedicated (App Service) Plan
+
+* Default timeout: 30 minutes
+* Maximum timeout: Unlimited
+* Shared App Service resources
+* Predictable billing
+
+---
+
+## HTTP Trigger Timeout
+
+HTTP-triggered functions have a maximum request duration of **230 seconds** due to Azure Load Balancer timeout limitations.
+
+---
+
+## Authorization Levels
+
+### Anonymous
+
+No API key required.
+
+### Function
+
+Function-specific key required.
+
+### Admin
+
+Master/Host key required.
+
+Pass keys using:
+
+```http
+?code=<function-key>
+```
+
+or
+
+```http
+x-functions-key: <key>
+```
+
+---
+
+## Deployment Slots
+
+Used for zero-downtime deployments.
+
+### Features
+
+* Staging environment
+* Production environment
+* Swap source and target slots
+* Auto Swap support
+
+### Interview Question
+
+**What settings do not swap?**
+
+Examples:
+
+* Connection Strings (optional)
+* App Settings marked as slot settings
+
+---
+
+# Azure API Management (APIM)
+
+Azure API Management acts as an API Gateway.
+
+## Responsibilities
+
+* Route API requests
+* Authenticate users
+* Validate API keys
+* Apply rate limits
+* Apply quotas
+* Transform requests/responses
+* Monitoring and analytics
+* Logging and troubleshooting
+
+---
+
+## APIM Components
+
+### API Gateway
+
+Handles incoming API requests.
+
+### Management Plane
+
+Administration and configuration.
+
+### Developer Portal
+
+Portal for API consumers.
+
+---
+
+## Backend Services
+
+Examples:
+
+* Azure Functions
+* App Service
+* AKS
+* Logic Apps
+* On-premise APIs
+
+---
+
+## APIM Modes
+
+### Managed Gateway
+
+Hosted by Azure.
+
+### Self-Hosted Gateway
+
+Used for:
+
+* Hybrid environments
+* On-premises integrations
+* Multi-cloud deployments
+
+---
+
+## Policies
+
+Policies are XML-based rules.
+
+### Inbound
+
+Executed before backend request.
+
+Examples:
+
+* Validate JWT
+* Check Subscription Key
+* Add Header
+* Rewrite URL
+
+### Backend
+
+Executed before backend call.
+
+### Outbound
+
+Executed before response returns.
+
+Examples:
+
+* Remove sensitive headers
+* Add custom headers
+* Transform response
+
+### On Error
+
+Executed when exceptions occur.
+
+---
+
+## Security
+
+Authentication options:
+
+* Subscription Keys
+* OAuth 2.0
+* Client Certificates
+* Managed Identity
+* JWT Validation
+
+### Common Interview Question
+
+**Difference between Authentication and Authorization?**
+
+Authentication:
+
+* Who are you?
+
+Authorization:
+
+* What can you access?
+
+---
+
+# Azure Cosmos DB
+
+Globally distributed NoSQL database.
+
+## Consistency Levels
+
+1. Strong
+2. Bounded Staleness
+3. Session
+4. Consistent Prefix
+5. Eventual
+
+### Interview Favorite
+
+**Default Consistency Level?**
+
+Session Consistency
+
+---
+
+## Stored Procedures
+
+* Written in JavaScript
+* Execute within a partition
+* ACID compliant
+
+---
+
+## Triggers
+
+### Pre Trigger
+
+Runs before operation.
+
+### Post Trigger
+
+Runs after operation.
+
+---
+
+## User Defined Functions (UDF)
+
+* Written in JavaScript
+* Used inside SQL queries
+* Returns computed values
+
+---
+
+# Logic Apps
+
+Azure service for workflow automation.
+
+## Authentication Options
+
+* OAuth
+* Service Principal
+* Managed Identity
+
+---
+
+## Hosting Models
+
+### Consumption
+
+* Pay-per-execution
+* Multi-tenant
+
+### Standard
+
+* Single-tenant
+* Better performance
+* Stateful and Stateless workflows
+
+---
+
+## Interview Question
+
+**Logic Apps vs Azure Functions**
+
+Logic Apps:
+
+* Low-code workflow orchestration
+
+Azure Functions:
+
+* Custom code execution
+
+---
+
+# Azure Durable Functions
+
+Extension of Azure Functions used for stateful workflows.
+
+## Benefits
+
+* Long-running processes
+* Workflow orchestration
+* State management
+
+---
+
+## Durable Function Types
+
+### Orchestrator Function
+
+Controls workflow execution.
+
+```csharp
+IDurableOrchestrationContext context;
+```
+
+---
+
+### Activity Function
+
+Performs actual work.
+
+```csharp
+await context.CallActivityAsync<int>("ProcessData", value);
+```
+
+---
+
+# Durable Function Patterns
+
+## 1. Function Chaining
+
+Sequential execution.
+
+Example:
+
+1. Validate Order
+2. Process Payment
+3. Generate Invoice
+4. Send Email
+
+---
+
+## 2. Fan-Out / Fan-In
+
+Parallel execution followed by aggregation.
+
+Example:
+
+* Process 100 files simultaneously
+* Aggregate results after completion
+
+Benefits:
+
+* Faster execution
+* Better scalability
+
+---
+
+## 3. Async HTTP API Pattern
+
+Flow:
+
+1. Client starts process
+2. Function returns Status URL
+3. Client polls URL
+4. Process completes
+
+---
+
+## 4. Monitor Pattern
+
+Used for:
+
+* Inventory monitoring
+* Stock price monitoring
+* Job completion tracking
+
+---
+
+## 5. Human Interaction Pattern
+
+Examples:
+
+* Manager approval workflows
+* OTP validation
+* User authorization
+
+---
+
+# State Management in Durable Functions
+
+Durable Functions maintain state using:
+
+## Event Sourcing
+
+Stores execution history as events.
+
+## Checkpointing
+
+Saves progress automatically.
+
+## Azure Storage
+
+Stores:
+
+* Execution history
+* Workflow state
+* Checkpoints
+
+---
+
+# Task Hub
+
+Logical container for orchestration resources.
+
+Contains:
+
+* Control Queues
+* Work Item Queues
+* Tables
+* Instance State
+
+---
+
+# Failure Handling in Durable Functions
+
+## Retry Policies
+
+Automatically retry failed activities.
+
+## Compensation Transactions
+
+Undo completed operations when a later step fails.
+
+Example:
+
+* Payment completed
+* Shipment failed
+* Refund payment
+
+## Error Handling
+
+Use try-catch in orchestrator functions.
+
+## Dead Letter Queue
+
+Can be implemented using Service Bus for failed processing.
+
+---
+
+# Frequently Asked Azure Interview Questions
+
+### What is Managed Identity?
+
+A secure Azure identity used by services to authenticate without storing credentials.
+
+### Difference between Queue Storage and Service Bus?
+
+Queue Storage:
+
+* Basic messaging
+* Lower cost
+
+Service Bus:
+
+* FIFO
+* Sessions
+* Transactions
+* Dead Letter Queue
+* Duplicate Detection
+
+### What is Cold Start?
+
+Delay experienced when a serverless application starts after being idle.
+
+### What is a Deployment Slot?
+
+A staging environment used for zero-downtime deployments.
+
+### Difference between Consumption and Premium Plan?
+
+Consumption:
+
+* Pay per execution
+* Cold starts possible
+
+Premium:
+
+* Pre-warmed instances
+* No cold starts
+* Higher performance
+
+### What is Fan-Out/Fan-In Pattern?
+
+Run multiple tasks in parallel and combine results afterward.
+
+### What is APIM Policy?
+
+XML-based configuration that controls API behavior without changing backend code.
