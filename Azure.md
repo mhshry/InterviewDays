@@ -9,6 +9,18 @@ Event Hubs: High-throughput event ingestion for analytics.`
 
 
 **Azure Data Factory** is a serverless and cloud-based data integration service and platform used for the creation of ETL and ELT pipelines. It helps in the creation of data-driven workflows for the planning and execution of data movements and data transformation at scale.
+Azure Data Factory is a serverless and cloud-based data integration service and platform used for the creation of ETL and ELT pipelines. It helps in the creation of data-driven workflows for the planning and execution of data movements and data transformation at scale.
+building blocks- Pipeline activity,  dataset linked service, Integration runtime
+**Integration Runtime** (IR): AZUre (manged by azure), Self-Hosted IR(on-premises or on a private virtual network setup Express & manual), Azure-SSIS IR
+Triggers: Schedule Trigger, Tumbling Window Trigger, Event-Based Trigger(blob)
+How do you handle pipeline failures and partial reruns?
+Activity Dependency Conditions: Branch execution paths conditionally on target outcomes like Upon Success, Upon Failure, Upon Completion, or Upon Skip.
+Retry Policy: Configure an explicit retry count and wait interval natively on individual high-risk activities.
+Rerun From Failed Activity: Use the monitoring dashboard to restart a failed pipeline run instantly from the exact component that crashed, bypassing already completed workflows.
+pipeline breaks because incoming JSON file schemas change unpredictably?- Enable Schema Drift in Mapping Data Flows
+Managed Identities (System-assigned or User-assigned) or store the connection strings securely inside Azure Key Vault. 
+
+
 
 
 
@@ -36,15 +48,11 @@ Deployment Slot: Swap source to target, Configure auto swap
 
 **APIM**: Accept api call \\\& route, Verify api keys credenctial,  usage quotas and rate limits, Transforms requests and responses specified in policy ,  logs, Metrix and monitoring troubshooting
 
-
-
 Managed(Default) backend api deveopler and Self hosted (Onprem to cloud) hybride and multi cloud scnerio
 
-Policy: Inbound, 
+Policy: Inbound- Cache, jwt auth, rate limit, add custom header
 
-out bound(refine output, removes a sensitive header and adds a custom one), Select Add header, Validate Header, content, Status, custom
-
-&#x20;onerror set in xml
+out bound(refine output, removes a sensitive header and adds a custom one), Select Add header, Validate Header, content, Status, custom;onerror set in xml
 
 Secure: SubscriptionKey in request header, Client Certificate also Set Inbound policy, Oauth
 
@@ -61,8 +69,16 @@ Store procedure in JavaScript, Trigger- Pre \\\& post (Select \\\* from root, Ge
 **Logic APP**
 
 Authentication: oauth, Service principle, ManagedIdentity
-
 Create with Consumption satateful and Standard(workflow)
+
+Azure Logic Apps is a cloud-based service used to automate workflows and integrate applications, data, and services across cloud and on-premises environments with little or no code
+Authentication: oauth, Service principle, ManagedIdentity, Acces key, Basic auth, client certificate
+Create with Consumption satateful : Pay per execution, Suitable for event-driven workloads, Multi-tenant
+and Standard(workflow): Single-tenant, Fixed pricing model
+Trigger in Logic Apps: trigger starts the workflow execution. hhtp request , blob Service bus: Type: Polling trigger push trigger
+Action: Createblob, Insert raw sql, call rest api
+handle errors in Logic Apps:  Configure Run After, Scope action try catch, retry policy in setting scope, Exception handling workflow
+Logic Apps connect to on-premises: On-Premises Data Gateway, VPN gateway
 
 
 
