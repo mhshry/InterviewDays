@@ -1,0 +1,162 @@
+Paging: ==========
+1.CollectionList.Skip((pageNumber - 1) * pageSize).Take(pageSize)
+2.(from x in myCollection orderby x.Name select x).Skip(20).Take(10);
+sql SELECT * FROM c ORDER BY c.id OFFSET 20 LIMIT 10
+====Linq 
+var result = customers.Join(orders,
+    c => c.Id,     o => o.CustomerId,  
+	(c, o) => new   { c.Name, o.OrderId   });
+var result = from c in customers  join o in orders  on c.Id equals o.CustomerId
+    select new  { c.Name, o.OrderId };
+==============
+public sealed class Singleton5
+{
+    private Singleton5()
+    {
+    }
+    private static readonly Lazy<Singleton5> lazy = new Lazy<Singleton5>(() => new Singleton5());
+    public static Singleton5 Instance
+    {
+        get
+        {
+            return lazy.Value;
+        }
+    }
+
+------
+private static readonly object lock = new object();
+    private static Singleton2 instance = null;
+    public static Singleton2 Instance {
+        get {
+            lock(lock) {
+                if (instance == null) {
+                    instance = new Singleton2();
+                }
+                return instance;
+            }
+        }
+}
+
+OPEN-Clos Principle==========
+
+    public class Invoice
+    {
+        public virtual double GetInvoiceDiscount(double amount)
+        {
+            return amount - 10;
+        }
+    }
+    
+    public class FinalInvoice : Invoice
+    {
+        public override double GetInvoiceDiscount(double amount)
+        {
+            return base.GetInvoiceDiscount(amount) - 50;
+        }
+    }
+    public class ProposedInvoice : Invoice
+    {
+        public override double GetInvoiceDiscount(double amount)
+        {
+            return base.GetInvoiceDiscount(amount) - 40;
+        }
+    }
+Also Create Program with Interface and Class, Also Can we use Abstract class and method then inhrite in child class with Orderride method
+Liskov Substitution Principle (LSP)
+public interface IPayment
+    {
+        void Pay(decimal amount);
+    }
+    public interface IRfundable
+    {
+        void Refund(decimal amount);
+    }
+
+    public class CardPayment: IPayment, IRfundable
+    {
+        public void Pay(decimal amount)
+            => Console.WriteLine($"Card Amount Paid: {amount}");
+
+        public void Refund(decimal amount)
+            => Console.WriteLine($"Card Amount Refund: {amount}");
+    }
+
+    public class CashPayment: IPayment
+    {
+        public void Pay(decimal amount)
+            => Console.WriteLine($"Cash Amount Paid: {amount}");
+    }
+
+    public class PaymentProcess
+    {
+        public void ProcessPayment(IPayment payment, decimal amount)
+        {
+            payment.Pay(amount);
+        }
+        public void RefundPayment(IRfundable refund, decimal amount)
+        {
+            refund.Refund(amount);
+        }
+    }
+=====Single interface used in multiple class
+builder.Services.AddKeyedSingleton<IMemoryCache, BigCache>("big");
+builder.Services.AddKeyedSingleton<IMemoryCache, SmallCache>("small");
+
+class BigCacheConsumer([FromKeyedServices("big")] IMemoryCache cache)
+{
+    public object? GetData() => cache.Get("data");
+}
+
+class SmallCacheConsumer(IKeyedServiceProvider keyedServiceProvider)
+{
+    public object? GetData() => keyedServiceProvider
+;
+}
+====Hello
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        string str = "Hello";
+        Dictionary<char, int> count = new Dictionary<char, int>();
+
+        foreach (char c in str)
+        {
+            if (count.ContainsKey(c))
+                count[c]++;
+            else
+                count[c] = 1;
+        }
+
+        foreach (var item in count)
+        {
+            Console.WriteLine(item.Key + " : " + item.Value);
+        }
+    }
+}
+---
+string str = "Hello";
+
+        var result = str.GroupBy(c => c);
+
+        foreach (var g in result)
+        {
+            Console.WriteLine(g.Key + " : " + g.Count());
+        }
+=================================
+1.The Strategy Pattern is a behavioral design pattern that lets you define a family of algorithms, put each one in a separate class, and make their objects interchangeable. Opne close principle
+2. Observer Pattern Idea: One object notifies multiple dependents automatically. public event Action Notify; Notify?invoke()- Pub Sub
+3. Iterator Pattern: Access elements of a collection without exposing structure. List with foreeach
+4.State Pattern: Object changes behavior when its state changes.
+5.Chain of Responsibility Idea: Pass request through chain until handled.
+GIVEN for loop input i=1 and i<=100
+	WHEN input % 3 && input % 5 equal to 0 
+		Then print FizzBuzz
+	WHEN input % 3 equal to 0 
+		Then PRINT Fizz
+	WHEN input % 5 equal to 0 
+		THEN PRINT Buzz
+ELSE DEfault PRINT number
