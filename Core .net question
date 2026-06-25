@@ -1,0 +1,49 @@
+Concurrency: Concurrency is when two or more tasks can start, run, and complete in overlapping time periods.
+It’s about managing multiple tasks at once.
+async / await or Task, Await Task.WhenAll(tasks dowork);
+
+Parallelism:Parallelism is when two or more tasks are executed at the same time on multiple CPU cores.
+Using Parallel.For or Parallel.ForEach from System.Threading.Tasks.
+
+The async and await keywords in C# make it easier to write asynchronous, non-blocking code . They are primarily used with Task and Task<TResult> to handle I/O-bound operations efficiently without freezing the main thread.
+==================================
+.net 10===
+1. Route tamplate highlight
+2. OpenApi generat ethe document in yaml app.MapOpenApi("/openapi/{documentName}.yaml");
+3. Add description in Produce response Type- [ProducesResponseType<IEnumerable<WeatherForecast>>(StatusCodes.Status200OK,
+    Description = "The weather forecast for the next 5 days.")]
+4. Field keyword in property to validation check
+5. Partial class/event and contracture use with this and base
+6 null condition in left side
+7.  System.Span<T> and System.ReadOnlySpan<T>  assignment
+8 Support validation in minimal api
+9. lambdas can have default values, ref, in, and other modifiers.
+==============
+[FromKeyedServices("big")] IMemoryCache cache or IKeyedServiceProvider..GetRequiredKeyedService<IMemoryCache>("small").Get("data")
+==============SOLID- maintainable, scalable, testable readable
+S → One class = one job
+O → Extend behavior without editing old code
+L → Child classes should behave like parents
+I → Small, focused interfaces
+D → Depend on abstractions, not concrete classes , Reduce coupling and improve flexibility
+
+===========Middleware
+handle HTTP requests and responses,Middleware components can perform various tasks such as authentication, logging, error handling, and routing. pass the request to the next component or handle it and terminate the pipeline. This is known as short-circuiting.
+===========Filters
+filters are components that allow you to run code before or after certain stages in the request processing pipeline. mainly used for cross-cutting concerns like logging, authentication, authorization, caching, and exception handling.
+
+, CDN, OAuth, MFA, and OWASP security standards.
+=========
+Reverse proxy:  SSl handsake, cache, security, Validate invalid request, Use when 1 server
+Load balancing: Intelegent traffic distribution on server, hhttp
+Round robine- A->B->C->A->B->C
+Least Connection-> Less
+Weighted Distribution- 1 machine strong machine can have more load
+IP hashing: Ip based
+layed 7: Unsdtand traffic, route contant based on slas use,paymnet to send reqauet to server, layer 4 dont know Http tcp
+Health check failover: When one server down send reqaut to other
+
+
+
+
+
