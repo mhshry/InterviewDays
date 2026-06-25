@@ -1,0 +1,71 @@
+.env file
+AZURE_EXISTING_AGENT_ID=""
+AZURE_ENV_NAME="workflows-playground-7741"
+AZURE_LOCATION="eastus2"
+AZURE_SUBSCRIPTION_ID="a085e1d8-0b58-4784-a0d5-4253d1d0e63e"
+AZURE_EXISTING_AIPROJECT_ENDPOINT="https://****/api/projects/mhshry-aiagent"
+AZURE_EXISTING_AIPROJECT_RESOURCE_ID="/subscriptions/***/resourceGroups/rg-mhshry-AIAgent/providers/Microsoft.CognitiveServices/accounts/mhshry-aiagent-resource/projects/mhshry-aiagent"
+AZURE_EXISTING_RESOURCE_ID="/subscriptions/*/resourceGroups/rg-mhshry-AIAgent/providers/Microsoft.CognitiveServices/accounts/mhshry-aiagent-resource"
+AZD_ALLOW_NON_EMPTY_FOLDER=true
+https://replit.com/refer/mahesharyacode?ref_surface=onboarding-modal
+
+fine-tune a model: Fine-tuning customizes a pretrained AI model with additional training on a specific task or dataset to improve performance, add new skills, or enhance accuracy. 
+Evalution: Evaluate the quality and safety of your generative AI applications with industry standard metrics to compare and choose the best version based on your need.
+tools: Speach, translator, Language, Vision, Azure Ai Search, 
+Models: ChatGpt, Custom model, Ai Service, batch job
+Guardrail:Add safety and security controls to your guardrail to help reduce risks and support deployments. Learn more 
+Name:  Microsoft.DefaultV2
+Risks with controls:  Jailbreak (1), Content safety (4), Protected materials (2)
+Risks without controls:  Indirect prompt injections, Sensitive data leakage, Task drif
+
+MCP tool. This connection extends agent capabilities with external tools and data sources. 
+================
+API key 4354df7e8gwf89g439fg934
+Project endpoint: https://mhshry-aiagent-resource.services.ai.azure.com/api/projects/mhshry-AIAgent
+Azure open Ai end point: https://mhshry-aiagent-resource.openai.azure.com/openai/v1
+
+Retrieval-Augmented Generation (RAG) is a technique that enhances large language models (LLMs) by allowing them to access external data sources at query time instead of relying solely on pre-trained knowledge. This approach improves accuracy, reduces hallucinations, and enables the model to provide up-to-date or domain-specific information. RAG is widely used in AI applications like chatbots, knowledge management systems, and question-answering platforms. 
+
+How RAG WorksExternal Knowledge Source: Stores documents, databases, APIs, or other structured/unstructured data. 
+
+Text Chunking and Preprocessing: Breaks large texts into manageable chunks and cleans them for consistency. 
+
+Embedding Model: Converts text chunks into numerical vectors that capture semantic meaning. 
+
+Vector Database: Stores embeddings and enables similarity search for fast retrieval. 
+
+Query Encoder: Transforms the user query into a vector for comparison with stored embeddings. 
+
+Retriever: Finds the most relevant chunks based on similarity to the query. 
+
+Prompt Augmentation Layer: Combines retrieved chunks with the user query to provide context to the LLM. 
+
+LLM (Generator): Generates a response grounded in both the query and retrieved knowledge. 
+
+Updater (Optional): Refreshes and re-embeds data to keep the knowledge base current. 
+
+
+
+
+Benefits
+Accuracy and Relevance:
+Domain Adaptation: LLM
+Transparency: verify information. 
+Cost Efficiency: Avoids expensive retraining by using external memory for updates. 
+
+Challenges in Production
+While RAG improves LLM outputs, naive implementations can fail, especially in retrieval. Common issues include:
+Semantic Gap: Queries may not match document vocabulary. 
+Context Window Pollution: Irrelevant chunks dilute the signal. 
+Chunking Artifacts: Splitting sentences or tables mid-thought can reduce usefulness. 
+Modern production systems address these with hybrid search, reranking, agentic RAG, and graph-augmented architectures to improve retrieval quality and efficiency. 
+
+Applications
+AI chatbots that answer questions using internal company data.
+Knowledge-intensive tasks requiring current or niche information.
+Systems that need to combine multiple sources for accurate, grounded responses.
+RAG has become the default architecture for AI applications needing reliable, context-aware outputs, effectively acting as a “short-term memory” for LLMs that complements their pre-trained knowledge. 
+
+
+
+
